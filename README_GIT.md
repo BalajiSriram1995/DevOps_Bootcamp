@@ -1,1 +1,2 @@
-Git command execution
+Git command execution and implementation
+
