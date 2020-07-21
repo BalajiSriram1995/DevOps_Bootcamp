@@ -1,2 +1,2 @@
-Git command execution and implementation
+Git command execution and implementation. Master.
 
