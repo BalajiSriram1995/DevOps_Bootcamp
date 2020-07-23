@@ -1,0 +1,30 @@
+node{
+    
+    stage('Code Checout'){
+        git 'https://github.com/BalajiSriram1995/DevOps_Bootcamp.git'
+    }
+    
+    stage('Code Build using Maven'){
+        def mavenHome= tool name : 'maven3', type: 'maven'
+        def mavenCMD="${mavenHome}/bin/mvn"
+        sh "cd cicd-pipeline && ${mavenCMD} clean package"
+    }
+    
+    stage('Create Docker Image'){
+        sh "cd cicd-pipeline && docker build -t balajisriram1995/docker-sb ."
+    }
+    
+    stage('Push Docker image to DockerHub'){
+        
+        withCredentials([string(credentialsId: 'DockerHubPwd', variable: 'Dockerpwd')]) {
+    
+            sh "docker login -u balajisriram1995 -p ${Dockerpwd}"
+            
+        }
+        
+        sh "docker push balajisriram1995/docker-sb"
+        
+    }
+    
+    
+}
